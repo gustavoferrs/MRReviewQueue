@@ -82,7 +82,23 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
             </span>
           )}
         </div>
-        <p className="text-xs text-gray-600 truncate mt-0.5">{item.mr}</p>
+        <div className="flex items-center gap-2 mt-0.5">
+          <p className="text-xs text-gray-600 truncate">{item.mr}</p>
+          {item.mrLink && (
+            <a href={item.mrLink} target="_blank" rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}>
+              MR ↗
+            </a>
+          )}
+          {item.storyLink && (
+            <a href={item.storyLink} target="_blank" rel="noopener noreferrer"
+              className="text-xs text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}>
+              História ↗
+            </a>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-1.5 flex-shrink-0">
