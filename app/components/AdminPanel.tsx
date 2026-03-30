@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, FormEvent } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -16,7 +16,7 @@ import {
   verticalListSortingStrategy,
   arrayMove,
 } from '@dnd-kit/sortable';
-import type { MRItem, HistoryItem, Team } from '@/lib/types';
+import type { MRItem, HistoryItem } from '@/lib/types';
 import AdminItem from './AdminItem';
 
 interface AdminPanelProps {
@@ -45,10 +45,6 @@ export default function AdminPanel({ password }: AdminPanelProps) {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-  const [formMr, setFormMr] = useState('');
-  const [formDev, setFormDev] = useState('');
-  const [formTeam, setFormTeam] = useState<Team>('Turing');
-  const [formLoading, setFormLoading] = useState(false);
   const [clearingHistory, setClearingHistory] = useState(false);
 
   function showToast(message: string, type: 'success' | 'error') {
@@ -103,29 +99,6 @@ export default function AdminPanel({ password }: AdminPanelProps) {
     }
   }
 
-  async function handleAddMR(e: FormEvent) {
-    e.preventDefault();
-    if (!formMr.trim() || !formDev.trim()) return;
-    setFormLoading(true);
-    try {
-      const res = await fetch('/api/queue', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
-        body: JSON.stringify({ mr: formMr, dev: formDev, team: formTeam }),
-      });
-      if (!res.ok) throw new Error();
-      setFormMr('');
-      setFormDev('');
-      setFormTeam('Turing');
-      showToast('MR adicionado com sucesso!', 'success');
-      fetchData();
-    } catch {
-      showToast('Erro ao adicionar MR.', 'error');
-    } finally {
-      setFormLoading(false);
-    }
-  }
-
   async function handleClearHistory() {
     if (!confirm('Limpar todo o histórico? Esta ação não pode ser desfeita.')) return;
     setClearingHistory(true);
@@ -166,46 +139,6 @@ export default function AdminPanel({ password }: AdminPanelProps) {
   return (
     <div className="space-y-8">
       {toast && <Toast message={toast.message} type={toast.type} />}
-
-      {/* Add MR form */}
-      <div className="bg-[#161b27] rounded-2xl border border-[#1e2535] p-6">
-        <h3 className="text-base font-bold text-gray-100 mb-4">Adicionar MR à fila</h3>
-        <form onSubmit={handleAddMR} className="space-y-3">
-          <input
-            type="text"
-            value={formMr}
-            onChange={(e) => setFormMr(e.target.value)}
-            placeholder="MR + descrição  (ex: !142 — feat: autenticação JWT)"
-            required
-            className="w-full px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={formDev}
-              onChange={(e) => setFormDev(e.target.value)}
-              placeholder="Nome do desenvolvedor"
-              required
-              className="flex-1 px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <select
-              value={formTeam}
-              onChange={(e) => setFormTeam(e.target.value as Team)}
-              className="px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="Turing">Turing</option>
-              <option value="Asgard">Asgard</option>
-            </select>
-          </div>
-          <button
-            type="submit"
-            disabled={formLoading || !formMr.trim() || !formDev.trim()}
-            className="w-full py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {formLoading ? 'Adicionando...' : '+ Adicionar à fila'}
-          </button>
-        </form>
-      </div>
 
       {/* Queue drag & drop */}
       <div>

@@ -64,11 +64,31 @@ export default function QueueItem({ item, position }: QueueItemProps) {
         <p className="text-xs text-gray-500 truncate mt-0.5">{item.mr}</p>
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0">
-        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${teamColor}`}>
-          {item.team}
-        </span>
-        <span className="text-xs text-gray-600 whitespace-nowrap">aguardando há {elapsed}</span>
+      <div className="flex flex-col items-end gap-1 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${teamColor}`}>
+            {item.team}
+          </span>
+          <span className="text-xs text-gray-600 whitespace-nowrap">há {elapsed}</span>
+        </div>
+        {(item.mrLink || item.storyLink) && (
+          <div className="flex items-center gap-2">
+            {item.mrLink && (
+              <a href={item.mrLink} target="_blank" rel="noopener noreferrer"
+                className="text-xs text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
+                onClick={(e) => e.stopPropagation()}>
+                MR ↗
+              </a>
+            )}
+            {item.storyLink && (
+              <a href={item.storyLink} target="_blank" rel="noopener noreferrer"
+                className="text-xs text-purple-400 hover:text-purple-300 underline underline-offset-2 transition-colors"
+                onClick={(e) => e.stopPropagation()}>
+                História ↗
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

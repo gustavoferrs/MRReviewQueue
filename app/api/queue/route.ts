@@ -15,13 +15,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthenticated(req)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const body = await req.json();
-    const { mr, dev, team } = body;
+    const { mr, dev, team, mrLink, storyLink } = body;
 
     if (!mr || !dev || !team) {
       return NextResponse.json({ error: 'Missing required fields: mr, dev, team' }, { status: 400 });
@@ -36,6 +32,8 @@ export async function POST(req: NextRequest) {
       mr: mr.trim(),
       dev: dev.trim(),
       team,
+      mrLink: mrLink?.trim() || undefined,
+      storyLink: storyLink?.trim() || undefined,
       addedAt: new Date().toISOString(),
       current: false,
     };
