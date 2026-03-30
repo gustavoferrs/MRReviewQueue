@@ -22,13 +22,13 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.4 : 1,
   };
 
   const teamColor =
     item.team === 'Turing'
-      ? 'bg-blue-100 text-[#185FA5]'
-      : 'bg-purple-100 text-[#534AB7]';
+      ? 'bg-blue-900/40 text-blue-300'
+      : 'bg-purple-900/40 text-purple-300';
 
   async function callPatch(body: object, setLoading: (v: boolean) => void) {
     setLoading(true);
@@ -54,13 +54,15 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex items-center gap-3 p-3 bg-white rounded-xl border ${item.current ? 'border-green-400' : 'border-gray-200'} shadow-sm group`}
+      className={`flex items-center gap-3 p-3 bg-[#161b27] rounded-xl border ${
+        item.current ? 'border-green-500/40' : 'border-[#1e2535]'
+      } group`}
     >
       {/* Drag handle */}
       <button
         {...attributes}
         {...listeners}
-        className="flex-shrink-0 cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 p-1 rounded"
+        className="flex-shrink-0 cursor-grab active:cursor-grabbing text-gray-700 hover:text-gray-400 p-1 rounded"
         title="Arrastar"
       >
         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -70,17 +72,17 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold text-gray-900 truncate">{item.dev}</p>
+          <p className="text-sm font-semibold text-gray-100 truncate">{item.dev}</p>
           <span className={`text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${teamColor}`}>
             {item.team}
           </span>
           {item.current && (
-            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-700 flex-shrink-0">
+            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-900/40 text-green-400 flex-shrink-0">
               Revisando
             </span>
           )}
         </div>
-        <p className="text-xs text-gray-400 truncate mt-0.5">{item.mr}</p>
+        <p className="text-xs text-gray-600 truncate mt-0.5">{item.mr}</p>
       </div>
 
       <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -88,7 +90,7 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
           onClick={() => callPatch({ action: 'setNow', id: item.id }, setLoadingSetNow)}
           disabled={loadingSetNow || item.current}
           title="Revisar agora"
-          className="px-2.5 py-1.5 text-xs font-medium bg-green-50 text-green-700 rounded-lg hover:bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-2.5 py-1.5 text-xs font-medium bg-green-900/30 text-green-400 rounded-lg hover:bg-green-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {loadingSetNow ? '...' : '▶ Revisar agora'}
         </button>
@@ -96,7 +98,7 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
           onClick={() => callPatch({ action: 'done', id: item.id }, setLoadingDone)}
           disabled={loadingDone}
           title="Done"
-          className="px-2.5 py-1.5 text-xs font-medium bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-2.5 py-1.5 text-xs font-medium bg-blue-900/30 text-blue-400 rounded-lg hover:bg-blue-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {loadingDone ? '...' : 'Done ✓'}
         </button>
@@ -104,7 +106,7 @@ export default function AdminItem({ item, password, onRefresh }: AdminItemProps)
           onClick={() => callPatch({ action: 'remove', id: item.id }, setLoadingRemove)}
           disabled={loadingRemove}
           title="Remover"
-          className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-50 transition-colors"
+          className="w-7 h-7 flex items-center justify-center text-gray-600 hover:text-red-400 hover:bg-red-900/30 rounded-lg disabled:opacity-40 transition-colors"
         >
           {loadingRemove ? '...' : '✕'}
         </button>

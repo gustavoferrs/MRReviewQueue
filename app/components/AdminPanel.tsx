@@ -45,12 +45,10 @@ export default function AdminPanel({ password }: AdminPanelProps) {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-  // Form state
   const [formMr, setFormMr] = useState('');
   const [formDev, setFormDev] = useState('');
   const [formTeam, setFormTeam] = useState<Team>('Turing');
   const [formLoading, setFormLoading] = useState(false);
-
   const [clearingHistory, setClearingHistory] = useState(false);
 
   function showToast(message: string, type: 'success' | 'error') {
@@ -158,7 +156,7 @@ export default function AdminPanel({ password }: AdminPanelProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-[#1e2535] border-t-gray-400 rounded-full animate-spin" />
       </div>
     );
   }
@@ -170,8 +168,8 @@ export default function AdminPanel({ password }: AdminPanelProps) {
       {toast && <Toast message={toast.message} type={toast.type} />}
 
       {/* Add MR form */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <h3 className="text-base font-bold text-gray-900 mb-4">Adicionar MR à fila</h3>
+      <div className="bg-[#161b27] rounded-2xl border border-[#1e2535] p-6">
+        <h3 className="text-base font-bold text-gray-100 mb-4">Adicionar MR à fila</h3>
         <form onSubmit={handleAddMR} className="space-y-3">
           <input
             type="text"
@@ -179,7 +177,7 @@ export default function AdminPanel({ password }: AdminPanelProps) {
             onChange={(e) => setFormMr(e.target.value)}
             placeholder="MR + descrição  (ex: !142 — feat: autenticação JWT)"
             required
-            className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <div className="flex gap-3">
             <input
@@ -188,12 +186,12 @@ export default function AdminPanel({ password }: AdminPanelProps) {
               onChange={(e) => setFormDev(e.target.value)}
               placeholder="Nome do desenvolvedor"
               required
-              className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <select
               value={formTeam}
               onChange={(e) => setFormTeam(e.target.value as Team)}
-              className="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-2.5 bg-[#1e2535] border border-[#2a3347] rounded-xl text-sm text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="Turing">Turing</option>
               <option value="Asgard">Asgard</option>
@@ -202,7 +200,7 @@ export default function AdminPanel({ password }: AdminPanelProps) {
           <button
             type="submit"
             disabled={formLoading || !formMr.trim() || !formDev.trim()}
-            className="w-full py-2.5 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {formLoading ? 'Adicionando...' : '+ Adicionar à fila'}
           </button>
@@ -211,13 +209,13 @@ export default function AdminPanel({ password }: AdminPanelProps) {
 
       {/* Queue drag & drop */}
       <div>
-        <h3 className="text-base font-bold text-gray-900 mb-3">
+        <h3 className="text-base font-bold text-gray-100 mb-3">
           Fila atual{' '}
-          <span className="text-sm font-normal text-gray-400">({queue.length} itens)</span>
+          <span className="text-sm font-normal text-gray-600">({queue.length} itens)</span>
         </h3>
         {queue.length === 0 ? (
-          <div className="bg-gray-50 rounded-2xl border border-dashed border-gray-200 p-8 text-center">
-            <p className="text-sm text-gray-400">Fila vazia</p>
+          <div className="bg-[#161b27] rounded-2xl border border-dashed border-[#1e2535] p-8 text-center">
+            <p className="text-sm text-gray-600">Fila vazia</p>
           </div>
         ) : (
           <DndContext
@@ -244,15 +242,15 @@ export default function AdminPanel({ password }: AdminPanelProps) {
       {/* History */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-bold text-gray-900">
+          <h3 className="text-base font-bold text-gray-100">
             Histórico{' '}
-            <span className="text-sm font-normal text-gray-400">({history.length} revisados)</span>
+            <span className="text-sm font-normal text-gray-600">({history.length} revisados)</span>
           </h3>
           {history.length > 0 && (
             <button
               onClick={handleClearHistory}
               disabled={clearingHistory}
-              className="text-xs text-red-500 hover:text-red-700 font-medium disabled:opacity-50 transition-colors"
+              className="text-xs text-red-500 hover:text-red-400 font-medium disabled:opacity-50 transition-colors"
             >
               {clearingHistory ? 'Limpando...' : 'Limpar histórico'}
             </button>
@@ -260,33 +258,33 @@ export default function AdminPanel({ password }: AdminPanelProps) {
         </div>
 
         {history.length === 0 ? (
-          <div className="bg-gray-50 rounded-2xl border border-dashed border-gray-200 p-8 text-center">
-            <p className="text-sm text-gray-400">Nenhum MR revisado ainda</p>
+          <div className="bg-[#161b27] rounded-2xl border border-dashed border-[#1e2535] p-8 text-center">
+            <p className="text-sm text-gray-600">Nenhum MR revisado ainda</p>
           </div>
         ) : (
           <div className="space-y-2">
             {history.map((item) => {
               const teamColor =
                 item.team === 'Turing'
-                  ? 'bg-blue-100 text-[#185FA5]'
-                  : 'bg-purple-100 text-[#534AB7]';
+                  ? 'bg-blue-900/40 text-blue-300'
+                  : 'bg-purple-900/40 text-purple-300';
               return (
                 <div
                   key={item.id}
-                  className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100 shadow-sm"
+                  className="flex items-center gap-3 p-3 bg-[#161b27] rounded-xl border border-[#1e2535]"
                 >
-                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 flex-shrink-0">
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[#1e2535] text-gray-400 flex-shrink-0">
                     Done ✓
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{item.dev}</p>
-                    <p className="text-xs text-gray-400 truncate">{item.mr}</p>
+                    <p className="text-sm font-semibold text-gray-100 truncate">{item.dev}</p>
+                    <p className="text-xs text-gray-600 truncate">{item.mr}</p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${teamColor}`}>
                       {item.team}
                     </span>
-                    <span className="text-xs text-gray-400">{formatDoneAt(item.doneAt)}</span>
+                    <span className="text-xs text-gray-600">{formatDoneAt(item.doneAt)}</span>
                   </div>
                 </div>
               );
