@@ -41,17 +41,26 @@ const positionColors: Record<number, string> = {
 
 export default function QueueItem({ item, position }: QueueItemProps) {
   const elapsed = useElapsed(item.addedAt);
-  const posClass = positionColors[position] ?? 'bg-gray-200 text-gray-700';
-  const teamColor = item.team === 'Turing' ? 'bg-blue-100 text-[#185FA5]' : 'bg-purple-100 text-[#534AB7]';
+  const posClass = positionColors[position] ?? 'bg-[#2a3347] text-gray-400';
+  const teamColor =
+    item.team === 'Turing'
+      ? 'bg-blue-900/40 text-blue-300'
+      : 'bg-purple-900/40 text-purple-300';
 
   return (
-    <div className={`flex items-center gap-4 p-4 bg-white rounded-xl border ${item.current ? 'border-green-400 shadow-md' : 'border-gray-100 shadow-sm'} transition-all`}>
-      <span className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold ${posClass}`}>
+    <div
+      className={`flex items-center gap-4 p-4 bg-[#161b27] rounded-xl border ${
+        item.current ? 'border-green-500/40 shadow-md shadow-green-900/10' : 'border-[#1e2535]'
+      } transition-all`}
+    >
+      <span
+        className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold ${posClass}`}
+      >
         {position}
       </span>
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-gray-900 truncate">{item.dev}</p>
+        <p className="text-sm font-semibold text-gray-100 truncate">{item.dev}</p>
         <p className="text-xs text-gray-500 truncate mt-0.5">{item.mr}</p>
       </div>
 
@@ -59,9 +68,7 @@ export default function QueueItem({ item, position }: QueueItemProps) {
         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${teamColor}`}>
           {item.team}
         </span>
-        <span className="text-xs text-gray-400 whitespace-nowrap">
-          aguardando há {elapsed}
-        </span>
+        <span className="text-xs text-gray-600 whitespace-nowrap">aguardando há {elapsed}</span>
       </div>
     </div>
   );

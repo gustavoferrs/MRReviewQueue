@@ -33,19 +33,19 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-[#0d0f14]">
       <div className="max-w-2xl mx-auto px-4 py-6 sm:py-10">
         {/* Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">MR Review Queue</h1>
+              <h1 className="text-2xl font-bold text-gray-100">MR Review Queue</h1>
               <p className="text-sm text-gray-500 mt-0.5">Fila de code review — Times Turing &amp; Asgard</p>
             </div>
             {isAuthenticated && (
               <button
                 onClick={handleLogout}
-                className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
               >
                 Sair
               </button>
@@ -53,13 +53,13 @@ export default function Home() {
           </div>
 
           {/* Tabs */}
-          <div className="mt-5 flex gap-1 bg-gray-100 rounded-xl p-1">
+          <div className="mt-5 flex gap-1 bg-[#161b27] rounded-xl p-1">
             <button
               onClick={() => setActiveTab('public')}
               className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'public'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-[#1e2535] text-gray-100 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-300'
               }`}
             >
               Fila pública
@@ -68,11 +68,11 @@ export default function Home() {
               onClick={() => setActiveTab('admin')}
               className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
                 activeTab === 'admin'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-[#1e2535] text-gray-100 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-300'
               }`}
             >
-              Admin {isAuthenticated && <span className="text-green-500">●</span>}
+              Admin {isAuthenticated && <span className="text-green-400">●</span>}
             </button>
           </div>
         </div>
