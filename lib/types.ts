@@ -5,6 +5,8 @@ export type MRItem = {
   mr: string;
   dev: string;
   team: Team;
+  mrLink?: string;
+  storyLink?: string;
   addedAt: string;
   current: boolean;
 };
